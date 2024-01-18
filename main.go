@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"net/http"
 	"todo/api/todo"
 
 	"github.com/gin-gonic/gin"
@@ -13,7 +14,9 @@ func sayHi(c *gin.Context) {
 
 func main() {
 	router := gin.Default()
-	router.GET("/", sayHi)
+	router.LoadHTMLGlob("*.html")
+
+	router.GET("/", func(c *gin.Context) {c.HTML(http.StatusOK, "index.html", "")})
 	todoRoute := router.Group("/todo")
 	{
 		todoRoute.GET("/", todo.GetAllTodo)
